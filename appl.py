@@ -1,4 +1,4 @@
-import pyperclip
+import pyperclip #pyperclip is a clipboard module for python that allows you to manipulate clipboard data
 import re
 
 
@@ -7,7 +7,7 @@ clipboard = pyperclip.paste()
 
 
 
-# Define regular expression pattern
+# the regular expression pattern for phone numbers
 phoneRegex = re.compile(r'''(
     (\d{3}|\(\d{3}\))? # area code
     (\s|-|\.)? # separator
@@ -17,6 +17,8 @@ phoneRegex = re.compile(r'''(
     (\s*(ext|x|ext.)\s*(\d{2,5}))? # extension
     )''', re.VERBOSE)
 
+
+#the regular expression pattern for emails
 emailRegex = re.compile(r'''(
     [a-zA-Z0-9._%+-]+ # username
     @ # @ symbol
@@ -26,7 +28,7 @@ emailRegex = re.compile(r'''(
 
 
 
-# Search for phone numbers and email addresses
+# Search for phone numbers and email addresses, if they exisst add them to each respective list
 phoneNumbers = []
 emailAddresses = []
 
@@ -39,14 +41,14 @@ for match in emailRegex.findall(clipboard):
 
 
 
-# Copy extracted data to clipboard
+# copy extracted data to clipboard
 output = "Phone Numbers:\n" + "\n".join(phoneNumbers) + "\n\nEmail Addresses:\n" + "\n".join(emailAddresses)
 pyperclip.copy(output)
 
 
 
 
-#give feedback based on if phone numbers or emails are found in the selection
+#give feedback based on if phone numbers or emails are found in the selection, if none are found provide a helpful message
 if len(phoneNumbers) == 0:
     print("No phone number found in that selection")
 else:
