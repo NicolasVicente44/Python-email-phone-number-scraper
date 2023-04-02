@@ -12,7 +12,7 @@ clipboard = pyperclip.paste()
 
 
 
-
+#the verbose method allows you to add comments and whitespace to the regex to make it more readable and modifiable
 # the regular expression pattern for phone numbers
 phoneRegex = re.compile(r'''(
     (\d{3}|\(\d{3}\))? # area code
@@ -35,14 +35,26 @@ emailRegex = re.compile(r'''(
 
 
 
+areaCodes = [] #set of unqiue area codes
 
 
 # Search for phone numbers and email addresses, if they exisst add them to each respective list
 phoneNumbers = []
 emailAddresses = []
+
+
 # append the data that matches the regexs in all the clipboard content to the respective lists
 for match in phoneRegex.findall(clipboard):
     phoneNumbers.append(match[0])
+    for phoneNumber in phoneNumbers:
+        areaCode = phoneNumber[:3] # extract the first 3 digits of the phone number
+        if areaCode not in areaCodes:
+            areaCodes.append(areaCode)
+print("Unique Area Codes:")
+for i in range(len(areaCodes)): #loops over the area codes list and print them
+    print(areaCodes[i])
+
+    
     
 for match in emailRegex.findall(clipboard):
     emailAddresses.append(match[0])
@@ -100,17 +112,19 @@ pyperclip.copy(output)
 
 
 
+#this function gives the user feedback 
+def feedBack ():
+
+    #give feedback based on if phone numbers or emails are found in the selection, if none are found provide a helpful message
+    if len(phoneNumbers) == 0:
+        print("No phone number found in that selection")
+    else:
+        print(f"{len(phoneNumbers)} phone numbers found in that selection")
 
 
+    if len(emailAddresses) == 0:
+        print("No email addresses found in that selection")
+    else:
+        print(f"{len(emailAddresses)} email addresses found in that selection")
 
-#give feedback based on if phone numbers or emails are found in the selection, if none are found provide a helpful message
-if len(phoneNumbers) == 0:
-    print("No phone number found in that selection")
-else:
-    print(f"{len(phoneNumbers)} phone numbers found in that selection")
-
-
-if len(emailAddresses) == 0:
-    print("No email addresses found in that selection")
-else:
-    print(f"{len(emailAddresses)} email addresses found in that selection")
+feedBack()
