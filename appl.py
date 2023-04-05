@@ -5,8 +5,29 @@ import re # import statement for regex
 from openpyxl import Workbook # imports the excel functionality to the program
 
 
+
+#this function gives the user feedback 
+def feedBack ():
+
+    #give feedback based on if phone numbers or emails are found in the selection, if none are found provide a helpful message
+    if len(phoneNumbers) == 0:
+        print("No phone number found in that selection")
+    else:
+        print(f"{len(phoneNumbers)} phone numbers found in that selection")
+
+
+    if len(emailAddresses) == 0:
+        print("No email addresses found in that selection")
+    else:
+        print(f"{len(emailAddresses)} email addresses found in that selection")
+
+
+
+
 # Get clipboard content
 clipboard = pyperclip.paste()
+
+
 
 
 
@@ -49,7 +70,8 @@ for match in phoneRegex.findall(clipboard):
     for phoneNumber in phoneNumbers:
         areaCode = phoneNumber[:3] # extract the first 3 digits of the phone number
         if areaCode not in areaCodes: #if the area code is unique, append it to the list
-            areaCodes.append(areaCode)
+            areaCodes.append(areaCode) # add the area code to the area codes list
+            
 print("Unique Area Codes:")
 for i in range(len(areaCodes)): #loops over the area codes list and print them
     print(areaCodes[i])
@@ -112,20 +134,6 @@ pyperclip.copy(output)
 
 
 
-#this function gives the user feedback 
-def feedBack ():
-
-    #give feedback based on if phone numbers or emails are found in the selection, if none are found provide a helpful message
-    if len(phoneNumbers) == 0:
-        print("No phone number found in that selection")
-    else:
-        print(f"{len(phoneNumbers)} phone numbers found in that selection")
-
-
-    if len(emailAddresses) == 0:
-        print("No email addresses found in that selection")
-    else:
-        print(f"{len(emailAddresses)} email addresses found in that selection")
         
         
 feedBack()
