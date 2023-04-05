@@ -48,7 +48,7 @@ for match in phoneRegex.findall(clipboard):
     phoneNumbers.append(match[0])
     for phoneNumber in phoneNumbers:
         areaCode = phoneNumber[:3] # extract the first 3 digits of the phone number
-        if areaCode not in areaCodes:
+        if areaCode not in areaCodes: #if the area code is unique, append it to the list
             areaCodes.append(areaCode)
 print("Unique Area Codes:")
 for i in range(len(areaCodes)): #loops over the area codes list and print them
@@ -126,5 +126,6 @@ def feedBack ():
         print("No email addresses found in that selection")
     else:
         print(f"{len(emailAddresses)} email addresses found in that selection")
-
+        
+        
 feedBack()
