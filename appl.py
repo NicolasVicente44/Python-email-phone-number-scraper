@@ -6,7 +6,7 @@ from openpyxl import Workbook # imports the excel functionality to the program
 
 
 
-#this function gives the user feedback 
+#this function gives the user feedback in the consolee
 def feedBack ():
 
     #give feedback based on if phone numbers or emails are found in the selection, if none are found provide a helpful message
@@ -37,19 +37,19 @@ clipboard = pyperclip.paste()
 # the regular expression pattern for phone numbers
 phoneRegex = re.compile(r'''(
     (\d{3}|\(\d{3}\))? # area code
-    (\s|-|\.)? # separator
+    (\s|-|\.)? # the separator
     (\d{3}) # first 3 digits
-    (\s|-|\.) # separator
-    (\d{4}) # last 4 digits
-    (\s*(ext|x|ext.)\s*(\d{2,5}))? # extension
+    (\s|-|\.) # the separator
+    (\d{4}) # last 4 digit oft he number
+    (\s*(ext|x|ext.)\s*(\d{2,5}))? #the extension
     )''', re.VERBOSE)
 
 #the regular expression pattern for emails
 emailRegex = re.compile(r'''(
-    [a-zA-Z0-9._%+-]+ # username
-    @ # @ symbol
+    [a-zA-Z0-9._%+-]+ # the username or first part of the email
+    @ # the @ symbol
     [a-zA-Z0-9.-]+ # domain name
-    (\.[a-zA-Z]{2,4}) # dot-something
+    (\.[a-zA-Z]{2,4}) # dot something
     )''', re.VERBOSE)
 
 
@@ -67,8 +67,11 @@ emailAddresses = []
 # append the data that matches the regexs in all the clipboard content to the respective lists
 for match in phoneRegex.findall(clipboard):
     phoneNumbers.append(match[0])
+    
+    
     for phoneNumber in phoneNumbers:
         areaCode = phoneNumber[:3] # extract the first 3 digits of the phone number
+        
         if areaCode not in areaCodes: #if the area code is unique, append it to the list
             areaCodes.append(areaCode) # add the area code to the area codes list
             
@@ -90,6 +93,8 @@ for match in emailRegex.findall(clipboard):
 
 
 wb = Workbook()  #creates a new excel workbook
+
+
 
 ws = wb.active # get the active excel work sheet
 
@@ -125,7 +130,7 @@ wb.save('grabbed_data.xlsx')  # saves the worksheet in the same directory/folder
 
 
 
-# copy extracted data to clipboard
+# copy extracted data to clipboard so the usere can paste it 
 output = "Phone Numbers:\n" + "\n".join(phoneNumbers) + "\n\nEmail Addresses:\n" + "\n".join(emailAddresses)
 pyperclip.copy(output)
 
@@ -135,5 +140,5 @@ pyperclip.copy(output)
 
 
         
-        
-feedBack()
+
+feedBack() # calling of the feed back function at the end of the program provides the user the feedback defiend in the function declaration 
